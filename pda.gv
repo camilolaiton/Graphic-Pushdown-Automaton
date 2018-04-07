@@ -1,0 +1,23 @@
+digraph pushDownAutomaton {
+	node [color=lightblue2 shape=circle style=filled]
+	label="Push Down Automaton - Palindromo Impar"
+	rankdir=LR size=10
+	node [shape=doublecircle]
+	r
+	node [shape=circle]
+	p -> p [label="b,b/bb 
+a,b/ba 
+b,a/ab 
+a,a/aa 
+b,#/#b 
+a,#/#a 
+"]
+	p -> q [label="c,#/# 
+c,b/b 
+c,a/a 
+"]
+	q -> q [label="b,b/λ 
+a,a/λ 
+"]
+	q -> r [label="λ,#/#"]
+}

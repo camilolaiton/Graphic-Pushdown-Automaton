@@ -1,0 +1,37 @@
+from graphviz import Digraph
+
+def labelString(lista):
+	labels = ""
+
+	for i in lista:
+		labels = labels + i
+
+	return labels
+
+#Transiciones 
+label_PtoP = ["b,b/bb \n", "a,b/ba \n", "b,a/ab \n", "a,a/aa \n", "b,#/#b \n", "a,#/#a \n"]
+label_PtoQ = ["c,#/# \n", "c,b/b \n", "c,a/a \n"]
+label_QtoQ = ["b,b/λ \n", "a,a/λ \n"]
+label_QtoR = ["λ,#/#"]
+
+transiciones = [label_PtoP, label_PtoQ, label_QtoQ, label_QtoR]
+
+g = Digraph("pushDownAutomaton", filename="pda.gv")
+g.attr('node', shape='circle', style='filled', color='lightblue2')
+g.attr(label='Push Down Automaton - Palindromo Impar')
+
+g.attr(rankdir="LR", size="10")
+g.attr("node", shape="doublecircle")
+g.node("r")
+
+g.attr("node", shape="circle")
+
+g.edge("p", "p", label=labelString(label_PtoP))
+
+g.edge("p", "q", label=labelString(label_PtoQ))
+
+g.edge("q", "q", label=labelString(label_QtoQ))
+
+g.edge("q", "r", label=labelString(label_QtoR))
+
+g.view()
