@@ -16,13 +16,14 @@ label_QtoR = ["λ,#/#"]
 
 transiciones = [label_PtoP, label_PtoQ, label_QtoQ, label_QtoR]
 
-g = Digraph("pushDownAutomaton", filename="pda.gv")
+g = Digraph("pushDownAutomaton", filename="pda.gv", format='png')
 g.attr(bgcolor='purple:pink')
 g.attr('node', shape='circle', style='filled', color='blue:cyan', gradientangle='270')
 g.attr('node', shape='doublecircle', style='filled', color='blue:cyan', gradientangle='270')
 g.attr(label='Push Down Automaton - Palindromo Impar')
+g.attr("edge", style="filled", color='black:lightgray', gradientangle='270')
 
-g.attr(rankdir="LR", size="8")
+g.attr(rankdir="LR", size="20")
 g.attr("node", shape="doublecircle")
 g.node("r")
 
