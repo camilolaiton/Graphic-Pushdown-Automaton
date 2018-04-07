@@ -17,10 +17,12 @@ label_QtoR = ["λ,#/#"]
 transiciones = [label_PtoP, label_PtoQ, label_QtoQ, label_QtoR]
 
 g = Digraph("pushDownAutomaton", filename="pda.gv")
-g.attr('node', shape='circle', style='filled', color='lightblue2')
+g.attr(bgcolor='purple:pink')
+g.attr('node', shape='circle', style='filled', color='blue:cyan', gradientangle='270')
+g.attr('node', shape='doublecircle', style='filled', color='blue:cyan', gradientangle='270')
 g.attr(label='Push Down Automaton - Palindromo Impar')
 
-g.attr(rankdir="LR", size="10")
+g.attr(rankdir="LR", size="8")
 g.attr("node", shape="doublecircle")
 g.node("r")
 
@@ -34,4 +36,4 @@ g.edge("q", "q", label=labelString(label_QtoQ))
 
 g.edge("q", "r", label=labelString(label_QtoR))
 
-g.view()
+g.render(None, None, True, False)

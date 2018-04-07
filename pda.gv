@@ -1,7 +1,9 @@
 digraph pushDownAutomaton {
-	node [color=lightblue2 shape=circle style=filled]
+	bgcolor="purple:pink"
+	node [color="blue:cyan" gradientangle=270 shape=circle style=filled]
+	node [color="blue:cyan" gradientangle=270 shape=doublecircle style=filled]
 	label="Push Down Automaton - Palindromo Impar"
-	rankdir=LR size=10
+	rankdir=LR size=8
 	node [shape=doublecircle]
 	r
 	node [shape=circle]
