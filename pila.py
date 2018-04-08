@@ -10,10 +10,18 @@ class Pila():
 			return self.datos.pop()
 
 		except:
-			raise ValueError("La pila esta vacia")
+			return None
 
 	def isEmpty(self):
 		return self.datos == []
 
 	def cantidadDatos(self):
 		return len(self.datos)
+
+	def verTope(self):
+		tope = self.sacarPila()
+
+		if tope != None:
+			self.apilar(tope)
+			
+		return tope
