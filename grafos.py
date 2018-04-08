@@ -9,7 +9,7 @@ def generarAutomata(nombre, transiciones, mostrar):
 	g.attr(label='Push Down Automaton - '+nombre)
 	g.attr("edge", style="filled", color='black:lightgray', gradientangle='270')
 
-	g.attr(rankdir="LR", size="20")
+	g.attr(rankdir="UD", size="20")
 	g.attr("node", shape="doublecircle")
 	g.node("r")
 
@@ -29,23 +29,23 @@ def labelString(lista):
 	labels = ""
 
 	for i in lista:
-		labels = labels + i
+		labels = labels + i + "\n"
 
 	return labels
 
 #Transiciones para grafo 1
-label_PtoP = ["b,b/bb \n", "a,b/ba \n", "b,a/ab \n", "a,a/aa \n", "b,#/#b \n", "a,#/#a \n"]
-label_PtoQ = ["c,#/# \n", "c,b/b \n", "c,a/a \n"]
-label_QtoQ = ["b,b/λ \n", "a,a/λ \n"]
-label_QtoR = ["λ,#/#"]
+label_PtoP = ["b/b/bb", "a/b/ba", "b/a/ab", "a/a/aa", "b/#/#b", "a/#/#a"]
+label_PtoQ = ["c/#/#", "c/b/b", "c/a/a"]
+label_QtoQ = ["b/b/λ", "a/a/λ"]
+label_QtoR = ["λ/#/#"]
 
 edges1 = [label_PtoP, label_PtoQ, label_QtoQ, label_QtoR]
 
 #Transiciones para grafo 2
-label_PtoP = ["b,b/bb \n", "a,b/ba \n", "b,a/ab \n", "a,a/aa \n", "b,#/#b \n", "a,#/#a \n"]
-label_PtoQ = ["b,b/λ \n", "a,a/λ \n"]
-label_QtoQ = ["b,b/λ \n", "a,a/λ \n"]
-label_QtoR = ["λ,#/#"]
+label_PtoP = ["b/b/bb", "a/b/ba", "b/a/ab", "a/a/aa", "b/#/#b", "a/#/#a"]
+label_PtoQ = ["b/b/λ", "a/a/λ"]
+label_QtoQ = ["b/b/λ", "a/a/λ"]
+label_QtoR = ["λ/#/#"]
 
 edges2 = [label_PtoP, label_PtoQ, label_QtoQ, label_QtoR]
 
