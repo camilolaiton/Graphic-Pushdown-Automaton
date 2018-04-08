@@ -41,30 +41,28 @@ class PDA:
 		if self.edges != None:
 			
 			print("\nIteracion: ", i)
-			print("Cadena inicial: ",cadena)
-			print("Indice letra: ", i, " Limite letra: ", limite)
 			
+			print("Indice letra: ", i, " Limite letra: ", limite)
+			print("Nodo actual: ", actual, " Nodo aceptado: ", self.estadoFinal)
+
+			if (cadena == "" or cadena == "λ") and actual == self.estadoFinal:
+				return "Palabra aceptada"
+
 			if cadena != "":
 				letra = cadena[0]
 				print("Letra actual: ", letra, " nodo actual: ", actual)
 			else:
-				cadena = "λ"
+				cadena = letra = "λ"
 				print("nodo", actual)
 				#Arreglar aca bug, insertar ultima validacion cuando la cadena es vacia
-
-			if i == limite and actual == self.estadoFinal:
-				mensaje = "Palabra aceptada"
-				return mensaje
-
-			if i == limite:
-				mensaje = "Palabra no aceptada, acabo limite"
-				return mensaje
-
+			
+			print("Cadena inicial: ",cadena)
 			actual = actual.lower()#Nodo donde se encuentra
 
 			encontro, posibleCamino = self.buscarNodo(actual)
 			#Recorro todos los posibles caminos si los hay
 			print(posibleCamino)
+
 			if posibleCamino != []:
 
 				encontroCamino = 0
@@ -109,21 +107,31 @@ class PDA:
 						#print("Cadena entera de "+ver+": ", regla, " leo, saco, meto: ", leo, saco, meto)
 
 				if encontroCamino == 0:
-					mensaje = "Palabra no aceptada, no encontro camino"
-					return mensaje
+					return "Palabra no aceptada, no encontro camino"
+
+			else:
+				return "Palabra no aceptada, no encontro caminos"
 
 automata1 = PDA("p", "r", "#")
+#  Transiciones grafo 1 --- REGLAS CON ESTE AUTOMATA YA ESTA BUENO
 
+"""
 label_PtoP = ["p-p","b/b/bb", "a/b/ba", "b/a/ab", "a/a/aa", "b/#/#b", "a/#/#a"]
 label_PtoQ = ["p-q","c/#/#", "c/b/b", "c/a/a"]
 label_QtoQ = ["q-q","b/b/λ", "a/a/λ"]
+label_QtoR = ["q-r","λ/#/#"]"""
+
+#Transiciones grafo 2 
+
+label_PtoP = ["p-p","b/b/bb", "a/b/ba", "b/a/ab", "a/a/aa", "b/#/#b", "a/#/#a"]
+label_PtoQ = ["p-q","b/b/λ", "a/a/λ"]
+label_QtoQ = ["q-q","b/b/λ", "a/a/λ"]
 label_QtoR = ["q-r","λ/#/#"]
 
-
-edges1 = [label_PtoP, label_PtoQ, label_QtoQ, label_QtoR]
+edges1 = [label_PtoQ, label_PtoP, label_QtoR, label_QtoQ]
 
 automata1.setEdges(edges1)
-print(automata1.evaluarCadena("abbcbba", automata1.estadoInicial, 0, len("abbcbba")))
+print(automata1.evaluarCadena("abbbba", automata1.estadoInicial, 0, len("abbbba")))
 
 
 
