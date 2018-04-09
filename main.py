@@ -78,20 +78,3 @@ main_window.columnconfigure(1, weight=1)
 main_window.columnconfigure(2, weight=1)
 main_window.mainloop()
 
-"""
-ventana = Tk()
-ventana.title("PushDown Automaton")
-ventana.geometry("1000x600")
-ventana.config(background="dark turquoise")
-etiqueta = Label(ventana, text="Automatas", bg="gold", fg="black")
-etiqueta.pack()
-
-ventana.columnconfigure(0, weight=1)
-ventana.rowconfigure(0, weight=1)
-
-imagenAuto = PhotoImage(file="Palindromo Impar.gv.png")
-lbImage = Label(ventana, image=imagenAuto)
-lbImage.pack()
-
-ventana.mainloop()
-"""
