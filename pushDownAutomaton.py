@@ -18,7 +18,7 @@ class PDA:
 		
 		if simboloInicial != None:
 			self.pila.apilar(simboloInicial)
-			self.proceso.append([simboloInicial, 1])
+			self.proceso.append([simboloInicial, 1, "", ""])
 			print(self.pila.verTope())
 
 	def setEdges(self, edges):
@@ -84,12 +84,12 @@ class PDA:
 									#Si el leo y saco estan bien
 									encontroCamino = True
 									
-									self.proceso.append([self.pila.sacarPila(), 0])
+									self.proceso.append([self.pila.sacarPila(), 0, regla])
 
 									for x in meto:
 										if x != "λ":
 											self.pila.apilar(x)
-											self.proceso.append([x, 1])
+											self.proceso.append([x, 1, regla, ver])
 
 									if leo == "λ":
 										return self.evaluarCadena(cadena, destino)

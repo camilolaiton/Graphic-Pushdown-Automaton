@@ -1,38 +1,65 @@
 from graphviz import Digraph
 
-def generarAutomata(nombre, transiciones, mostrar):
-		
-	g = Digraph("pushDownAutomaton", filename=nombre+".gv", format='png')
-	g.attr(bgcolor='purple:pink')
-	g.attr('node', shape='circle', style='filled', color='blue:cyan', gradientangle='270')
-	g.attr('node', shape='doublecircle', style='filled', color='blue:cyan', gradientangle='270')
-	g.attr(label='Push Down Automaton - '+nombre)
-	g.attr("edge", style="filled", color='black:lightgray', gradientangle='270')
+class automataGrafico:
+	def __init__(self, nombre, transiciones):
+		self.nombre = nombre
+		self.transiciones = transiciones
+		self.fileImage = "resources/" + nombre + ".gv.png"
 
-	g.attr(rankdir="UD", size="20")
-	g.attr("node", shape="doublecircle")
-	g.node("r")
+	def generarAutomata(self, mostrar, especial):
+			
+		g = Digraph("pushDownAutomaton", filename=self.nombre+".gv", format='png')
+		g.attr(bgcolor='purple:pink')
+		g.attr('node', shape='circle', style='filled', color='blue:cyan', gradientangle='270')
+		g.attr('node', shape='doublecircle', style='filled', color='blue:cyan', gradientangle='270')
+		g.attr(label='Push Down Automaton - '+self.nombre)
+		g.attr("edge", style="filled", color='black:lightgray', gradientangle='270')
 
-	g.attr("node", shape="circle")
+		g.attr(rankdir="UD", size="20")
+		g.attr("node", shape="doublecircle")
+		g.node("r")
 
-	g.edge("p", "p", label=labelString(transiciones[0]))
+		g.attr("node", shape="circle")
 
-	g.edge("p", "q", label=labelString(transiciones[1]))
+		origen = destino = None
 
-	g.edge("q", "q", label=labelString(transiciones[2]))
+		if especial != "":
+			especial = especial.lower()
+			divido = especial.split("-")
+			origen = divido[0]
+			destino = divido[1]
 
-	g.edge("q", "r", label=labelString(transiciones[3]))
+		if origen == "p" and destino == "p":
+			g.edge("p", "p", label=self.__labelString(self.transiciones[0]), color="red")
+		else:
+			g.edge("p", "p", label=self.__labelString(self.transiciones[0]))
 
-	g.render(None, None, mostrar, False)
+		if origen == "p" and destino == "q":
+			g.edge("p", "q", label=self.__labelString(self.transiciones[1]), color="red")	
+		else:
+			g.edge("p", "q", label=self.__labelString(self.transiciones[1]))
 
-def labelString(lista):
-	labels = ""
+		if origen == "q" and destino == "q":
+			g.edge("q", "q", label=self.__labelString(self.transiciones[2]), color="red")
+		else:
+			g.edge("q", "q", label=self.__labelString(self.transiciones[2]))
 
-	for i in lista:
-		labels = labels + i + "\n"
+		if origen == "q" and destino == "r":
+			g.edge("q", "r", label=self.__labelString(self.transiciones[3]), color="red")
+		else:
+			g.edge("q", "r", label=self.__labelString(self.transiciones[3]))
 
-	return labels
+		g.render("resources/"+self.nombre+especial, None, mostrar, False)
 
+	def __labelString(self, lista):
+		labels = ""
+
+		for i in lista:
+			labels = labels + i + "\n"
+
+		return labels
+
+"""
 #Transiciones para grafo 1
 label_PtoP = ["b/b/bb", "a/b/ba", "b/a/ab", "a/a/aa", "b/#/#b", "a/#/#a"]
 label_PtoQ = ["c/#/#", "c/b/b", "c/a/a"]
@@ -49,5 +76,11 @@ label_QtoR = ["λ/#/#"]
 
 edges2 = [label_PtoP, label_PtoQ, label_QtoQ, label_QtoR]
 
-generarAutomata("Palindromo Impar", edges1, True)
-generarAutomata("Palindromo Par", edges2, True)
+automata1 = automataGrafico("Palindromo Impar", edges1)
+automata2 = automataGrafico("Palindromo Par", edges2)
+
+automata1.generarAutomata(True, "")
+automata1.generarAutomata(True, "p-p")
+automata1.generarAutomata(True, "p-q")
+automata1.generarAutomata(True, "q-q")
+automata1.generarAutomata(True, "q-r")"""
