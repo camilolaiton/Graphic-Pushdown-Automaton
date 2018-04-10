@@ -1,5 +1,6 @@
 from tkinter import *
 from pila import Pila 
+import time
 
 def pintarPila(coord, mensaje):
 	
@@ -16,12 +17,12 @@ class pilaGrafica:
 		self.coord = coord
 		self.lista = []
 		self.mensajes = []
-		self.aumentarPila()
+		self.aumentarPila("#")
 
-	def aumentarPila(self):
+	def aumentarPila(self, mensaje):
 		
 		if len(self.lista) < 10:
-			i, m = pintarPila(self.coord, "cristian es caga")
+			i, m = pintarPila(self.coord, mensaje)
 			self.lista.append(i)
 			self.mensajes.append(m)
 			self.coord = self.coord[0], self.coord[1]-50, self.coord[2], self.coord[3]-50
@@ -64,13 +65,13 @@ label3 = Label(main_window, bg="dark turquoise")
 label3.grid(row=1, column=2, sticky="nsew")
 
 pila = pilaGrafica(coord)
-
+"""
 AumentarPila = Button(label3, text="Aumentar pila", command=pila.aumentarPila)
 AumentarPila.pack(expand=False, fill=BOTH)
 
 DecrementarPila = Button(label3, text="Decrementar Pila", command=pila.decrementarPila)
 DecrementarPila.pack(expand=False, fill=BOTH)
-
+"""
 main_window.rowconfigure(0, weight=1)
 main_window.rowconfigure(1, weight=15)
 main_window.columnconfigure(0, weight=1)
