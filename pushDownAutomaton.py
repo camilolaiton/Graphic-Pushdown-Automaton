@@ -121,5 +121,5 @@ label_QtoR = ["q-r","λ/#/#"]"""
 edges1 = [label_PtoQ, label_PtoP, label_QtoR, label_QtoQ]
 
 automata1.setEdges(edges1)
-print(automata1.evaluarCadena("aaacaaa", automata1.estadoInicial))
+print(automata1.evaluarCadena("abbcbba", automata1.estadoInicial))
 print(automata1.proceso)
