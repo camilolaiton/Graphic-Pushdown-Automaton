@@ -1,3 +1,4 @@
+import win32com.client as clwin
 from tkinter import *
 from pila import Pila 
 from pushDownAutomaton import PDA
@@ -21,6 +22,11 @@ def borrarPila(i, m):
 	canvas.delete(m)
 	canvas.delete(i)
 
+
+def SapiLee(lectura):
+	habla = clwin.Dispatch("SAPI.SpVoice")
+	habla.Speak(lectura)
+
 class pilaGrafica:
 	def __init__(self, coord, proceso, canvas):
 		self.coord = coord
@@ -29,13 +35,14 @@ class pilaGrafica:
 		self.proceso = proceso
 		self.canvas = canvas
 		self.mensaje = ""
+		self.bandera = 0
 
 	def aumentarPila(self):
 		
 		if len(self.lista) < 10:
 			#i, m = pintarPila(self.coord, mensaje)
-			i = self.canvas.create_rectangle(coord, width=5, fill='red', activefill="#0017F9")
-			m = self.canvas.create_text(coord[2]-80, coord[1]+20, text = self.mensaje, activefill="blue")
+			i = self.canvas.create_rectangle(self.coord, width=5, fill='red', activefill="#0017F9")
+			m = self.canvas.create_text(self.coord[2]-80, self.coord[1]+20, text = self.mensaje, activefill="blue")
 
 			self.lista.append(i)
 			self.mensajes.append(m)
@@ -51,14 +58,21 @@ class pilaGrafica:
 
 	def dibujarPila(self):
 
-		for w in self.proceso:
+		if self.bandera < len(self.proceso):
+			
+			w = self.proceso[self.bandera]
+
 			if w[1] == 1:
-				print("mete")
 				self.mensaje = w[0]
-				self.canvas.after(500, self.aumentarPila)
+				self.aumentarPila()
+				SapiLee("Introduzco " + w[0]+"en Pila")
 			else:
-				print("saco")
-				self.canvas.after(500, self.decrementarPila)
+				self.decrementarPila()
+				SapiLee("Saco " + w[0]+"en Pila")
+
+			self.bandera += 1
+			print(self.bandera, " Valor de letra: ", w[0], " Valor de pila: ", w[1])
+			self.canvas.after(1000, self.dibujarPila)
 
 
 coord = 30, 500, 200, 550
@@ -87,6 +101,10 @@ canvas.pack(expand=YES, fill=BOTH)
 label3 = Label(main_window, bg="dark turquoise")
 label3.grid(row=1, column=2, sticky="nsew")
 
+entrada = StringVar()
+
+txtUsuario = Entry(label2, textvariable=entrada)
+txtUsuario.pack()
 main_window.rowconfigure(0, weight=1)
 main_window.rowconfigure(1, weight=15)
 main_window.columnconfigure(0, weight=1)
