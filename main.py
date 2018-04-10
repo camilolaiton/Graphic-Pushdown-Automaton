@@ -23,8 +23,9 @@ def comenzar():
 
 	if txtUsuario.get() != "":
 
-		automata1.evaluarCadena(txtUsuario.get(), automata1.estadoInicial)
+		resultado = automata1.evaluarCadena(txtUsuario.get(), automata1.estadoInicial)
 		pila.dibujarPila()
+		print(resultado)
 	else:
 		SapiLee("Por favor, introduzca una cadena de caracteres")
 		
@@ -74,10 +75,10 @@ class pilaGrafica:
 			else:
 				self.decrementarPila()
 				SapiLee("Saco " + w[0]+" en pila")
-				cambiarImagen("")
-
+				cambiarImagen(w[3])
+			
+			self.canvas.after(800, lambda:cambiarImagen(""))
 			self.bandera += 1
-			print(self.bandera, " Valor de letra: ", w[0], " Valor de pila: ", w[1])
 			self.canvas.after(1000, self.dibujarPila)
 
 
@@ -126,7 +127,6 @@ main_window.columnconfigure(0, weight=1)
 main_window.columnconfigure(1, weight=1)
 main_window.columnconfigure(2, weight=1)
 
-print("Proceso de la pila donde 1 es meter y 0 es sacar: \n", automata1.proceso)
 
 #pila.dibujarPila()
 
