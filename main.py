@@ -77,12 +77,12 @@ class pilaGrafica:
 			if w[1] == 1:
 				self.mensaje = w[0]
 				self.aumentarPila()
-				SapiLee("Introduzco " + w[0]+" en pila")
+				#SapiLee("Introduzco " + w[0]+" en pila")
 				cambiarImagen(w[3])
 		
 			else:
 				self.decrementarPila()
-				SapiLee("Saco " + w[0] +" en pila")
+				#SapiLee("Saco " + w[0] +" en pila")
 				cambiarImagen(w[3])
 			
 			if destino != None:
