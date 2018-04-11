@@ -7,7 +7,7 @@ digraph pushDownAutomaton {
 	rankdir=UD size=20
 	node [shape=doublecircle]
 	p [shape=circle]
-	q [shape=circle]
+	q [color=red shape=circle]
 	r
 	node [shape=circle]
 	p -> p [label="b/b/bb

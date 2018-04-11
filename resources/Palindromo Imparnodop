@@ -6,8 +6,8 @@ digraph pushDownAutomaton {
 	edge [color="black:lightgray" gradientangle=270 style=filled]
 	rankdir=UD size=20
 	node [shape=doublecircle]
-	p [shape=circle]
-	q [shape=circle]
+	p [color=red]
+	q
 	r
 	node [shape=circle]
 	p -> p [label="b/b/bb

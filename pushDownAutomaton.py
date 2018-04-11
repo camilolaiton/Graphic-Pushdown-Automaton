@@ -103,7 +103,7 @@ class PDA:
 			else:
 				return "Palabra no aceptada, no encontro caminos"
 
-"""
+
 automata1 = PDA("p", "r", "#")
 #  Transiciones grafo 1 --- REGLAS CON ESTE AUTOMATA YA ESTA BUENO
 
@@ -113,13 +113,13 @@ label_QtoQ = ["q-q","b/b/λ", "a/a/λ"]
 label_QtoR = ["q-r","λ/#/#"]
 
 #Transiciones grafo 2 
-
+"""
 label_PtoP = ["p-p","b/b/bb", "a/b/ba", "b/a/ab", "a/a/aa", "b/#/#b", "a/#/#a"]
 label_PtoQ = ["p-q","b/b/λ", "a/a/λ"]
 label_QtoQ = ["q-q","b/b/λ", "a/a/λ"]
-label_QtoR = ["q-r","λ/#/#"]
+label_QtoR = ["q-r","λ/#/#"]"""
 
 edges1 = [label_PtoQ, label_PtoP, label_QtoR, label_QtoQ]
 
 automata1.setEdges(edges1)
-print(automata1.evaluarCadena("abbcbba", automata1.estadoInicial))"""
+print(automata1.evaluarCadena("abcba", automata1.estadoInicial))

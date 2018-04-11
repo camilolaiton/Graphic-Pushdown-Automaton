@@ -22,7 +22,6 @@ def cambiarImagen(elegir):
 def comenzar():
 
 	if txtUsuario.get() != "":
-
 		resultado = automata1.evaluarCadena(txtUsuario.get(), automata1.estadoInicial)
 		pila.dibujarPila()
 		print(resultado)
@@ -67,17 +66,28 @@ class pilaGrafica:
 			
 			w = self.proceso[self.bandera]
 
+			destino = None
+			ver = w[3]
+	
+			#Divido el string para saber Nodo origen a nodo destino
+			if len(ver) > 1:
+				divido = ver.split("-")
+				destino = divido[1]
+
 			if w[1] == 1:
 				self.mensaje = w[0]
 				self.aumentarPila()
 				SapiLee("Introduzco " + w[0]+" en pila")
 				cambiarImagen(w[3])
+		
 			else:
 				self.decrementarPila()
-				SapiLee("Saco " + w[0]+" en pila")
+				SapiLee("Saco " + w[0] +" en pila")
 				cambiarImagen(w[3])
 			
-			self.canvas.after(800, lambda:cambiarImagen(""))
+			if destino != None:
+				self.canvas.after(800, lambda:cambiarImagen(destino))
+
 			self.bandera += 1
 			self.canvas.after(1000, self.dibujarPila)
 

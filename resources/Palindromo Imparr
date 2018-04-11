@@ -8,7 +8,7 @@ digraph pushDownAutomaton {
 	node [shape=doublecircle]
 	p [shape=circle]
 	q [shape=circle]
-	r
+	r [color=red]
 	node [shape=circle]
 	p -> p [label="b/b/bb
 a/b/ba

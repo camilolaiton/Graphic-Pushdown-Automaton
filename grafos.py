@@ -6,8 +6,8 @@ class automataGrafico:
 		self.transiciones = transiciones
 		self.fileImage = "resources/" + nombre + ".gv.png"
 
-	def generarAutomata(self, mostrar, especial):
-			
+	def generarAutomata(self, mostrar, especial, nodo):
+		
 		g = Digraph("pushDownAutomaton", filename=self.nombre+".gv", format='png')
 		g.attr(bgcolor='purple:pink')
 		g.attr('node', shape='circle', style='filled', color='blue:cyan', gradientangle='270')
@@ -17,7 +17,23 @@ class automataGrafico:
 
 		g.attr(rankdir="UD", size="20")
 		g.attr("node", shape="doublecircle")
-		g.node("r")
+
+		if nodo == "p":
+			g.node("p", color = "red", shape='circle')
+			g.node("q", shape='circle')
+			g.node("r")
+		elif nodo == "q":
+			g.node("p", shape='circle')
+			g.node("q", color = "red", shape='circle')
+			g.node("r")
+		elif nodo == "r":
+			g.node("p", shape='circle')
+			g.node("q", shape='circle')
+			g.node("r", color="red")
+		else:
+			g.node("p", shape='circle')
+			g.node("q", shape='circle')
+			g.node("r")
 
 		g.attr("node", shape="circle")
 
@@ -49,7 +65,12 @@ class automataGrafico:
 		else:
 			g.edge("q", "r", label=self.__labelString(self.transiciones[3]))
 
-		g.render("resources/"+self.nombre+especial, None, mostrar, False)
+		if nodo != "":
+			nombre = "resources/"+self.nombre+nodo
+		else:
+			nombre = "resources/"+self.nombre+especial
+
+		g.render(nombre, None, mostrar, False)
 
 	def __labelString(self, lista):
 		labels = ""
@@ -59,7 +80,7 @@ class automataGrafico:
 
 		return labels
 
-"""
+
 #Transiciones para grafo 1
 label_PtoP = ["b/b/bb", "a/b/ba", "b/a/ab", "a/a/aa", "b/#/#b", "a/#/#a"]
 label_PtoQ = ["c/#/#", "c/b/b", "c/a/a"]
@@ -79,8 +100,11 @@ edges2 = [label_PtoP, label_PtoQ, label_QtoQ, label_QtoR]
 automata1 = automataGrafico("Palindromo Impar", edges1)
 automata2 = automataGrafico("Palindromo Par", edges2)
 
-automata1.generarAutomata(True, "")
-automata1.generarAutomata(True, "p-p")
-automata1.generarAutomata(True, "p-q")
-automata1.generarAutomata(True, "q-q")
-automata1.generarAutomata(True, "q-r")"""
+automata1.generarAutomata(True, "", "")
+automata1.generarAutomata(True, "", "p")
+automata1.generarAutomata(True, "", "q")
+automata1.generarAutomata(True, "", "r")
+automata1.generarAutomata(True, "p-p", "")
+automata1.generarAutomata(True, "p-q", "")
+automata1.generarAutomata(True, "q-q", "")
+automata1.generarAutomata(True, "q-r", "")
