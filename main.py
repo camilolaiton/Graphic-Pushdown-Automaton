@@ -24,7 +24,12 @@ def comenzar():
 	if txtUsuario.get() != "":
 		resultado = automata1.evaluarCadena(txtUsuario.get(), automata1.estadoInicial)
 		pila.dibujarPila()
-		print(resultado)
+		
+		if resultado == "Palabra aceptada":
+			resultado1.config(text="palabra aceptada")
+		else:
+			resultado1.config(text="palabra no aceptada")
+
 	else:
 		SapiLee("Por favor, introduzca una cadena de caracteres")
 		
@@ -92,6 +97,15 @@ class pilaGrafica:
 			self.canvas.after(1000, self.dibujarPila)
 
 
+def funtion(boton):
+	#print("click")
+	if boton == botonRapido:
+		botonRapido.config(bg="green")
+		botonLento.config(bg="red")
+	else:
+		botonRapido.config(bg="red")
+		botonLento.config(bg="green")
+
 coord = 30, 500, 200, 550
 
 main_window = Tk()
@@ -131,9 +145,17 @@ pila = pilaGrafica(coord, automata1.proceso, canvas)
 comenzarProceso = Button(label3, text="Comenzar", command=comenzar)
 comenzarProceso.pack(expand=False, fill=BOTH)
 
+botonLento = Button(label3, text="Lento", font="Algerian",  bg="green", command=lambda:funtion(botonLento))
+#botonLento.pack(expand=False, fill=BOTH)
+botonRapido = Button(label3, text="rapido1", highlightcolor="black", font="Algerian", bg="red", command=lambda:funtion(botonRapido))
+#botonRapido.pack(expand=False, fill=BOTH)
+
+resultado1 = Label(label1)
+#resultado1.pack(expand=False, fill=BOTH)
+
 main_window.rowconfigure(0, weight=1)
 main_window.rowconfigure(1, weight=15)
-main_window.columnconfigure(0, weight=1)
+main_window.columnconfigure(0, weight=5)
 main_window.columnconfigure(1, weight=1)
 main_window.columnconfigure(2, weight=1)
 
