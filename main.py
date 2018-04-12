@@ -13,6 +13,19 @@ label_QtoR = ["q-r","λ/#/#"]
 
 edges1 = [label_PtoQ, label_PtoP, label_QtoR, label_QtoQ]
 
+def funtion(boton):
+	#print("click")
+	
+	if boton == botonRapido:
+		botonRapido.config(bg="green")
+		botonLento.config(bg="red")
+		pila.sapi = False
+		
+	else:
+		botonRapido.config(bg="red")
+		botonLento.config(bg="green")
+		pila.sapi = True
+
 def cambiarImagen(elegir):
 	
     photo2 = PhotoImage(file="resources/Palindromo Impar"+elegir+".png")
@@ -23,13 +36,9 @@ def comenzar():
 
 	if txtUsuario.get() != "":
 		resultado = automata1.evaluarCadena(txtUsuario.get(), automata1.estadoInicial)
-		pila.dibujarPila()
 		
-		if resultado == "Palabra aceptada":
-			resultado1.config(text="palabra aceptada")
-		else:
-			resultado1.config(text="palabra no aceptada")
-
+		canvas.create_text(80, 20, text = resultado , activefill="blue")
+		pila.dibujarPila()
 	else:
 		SapiLee("Por favor, introduzca una cadena de caracteres")
 		
@@ -38,7 +47,7 @@ def SapiLee(lectura):
 	habla.Speak(lectura)
 
 class pilaGrafica:
-	def __init__(self, coord, proceso, canvas):
+	def __init__(self, coord, proceso, canvas, sapi):
 		self.coord = coord
 		self.lista = []
 		self.mensajes = []
@@ -46,6 +55,7 @@ class pilaGrafica:
 		self.canvas = canvas
 		self.mensaje = ""
 		self.bandera = 0
+		self.sapi = sapi
 
 	def aumentarPila(self):
 		
@@ -82,12 +92,16 @@ class pilaGrafica:
 			if w[1] == 1:
 				self.mensaje = w[0]
 				self.aumentarPila()
-				SapiLee("Introduzco " + w[0]+" en pila")
+
+				if self.sapi == True:
+					SapiLee("Introduzco " + w[0]+" en pila")
 				cambiarImagen(w[3])
 		
 			else:
 				self.decrementarPila()
-				SapiLee("Saco " + w[0] +" en pila")
+
+				if self.sapi == True:
+					SapiLee("Saco " + w[0] +" en pila")
 				cambiarImagen(w[3])
 			
 			if destino != None:
@@ -95,17 +109,7 @@ class pilaGrafica:
 
 			self.bandera += 1
 			self.canvas.after(1000, self.dibujarPila)
-
-
-def funtion(boton):
-	#print("click")
-	if boton == botonRapido:
-		botonRapido.config(bg="green")
-		botonLento.config(bg="red")
-	else:
-		botonRapido.config(bg="red")
-		botonLento.config(bg="green")
-
+		
 coord = 30, 500, 200, 550
 
 main_window = Tk()
@@ -140,19 +144,20 @@ txtUsuario.pack()
 automata1 = PDA("p", "r", "#")
 automata1.setEdges(edges1)
 
-pila = pilaGrafica(coord, automata1.proceso, canvas)
+pila = pilaGrafica(coord, automata1.proceso, canvas, True)
 
 comenzarProceso = Button(label3, text="Comenzar", command=comenzar)
 comenzarProceso.pack(expand=False, fill=BOTH)
 
-botonLento = Button(label3, text="Lento", font="Algerian",  bg="green", command=lambda:funtion(botonLento))
-#botonLento.pack(expand=False, fill=BOTH)
-botonRapido = Button(label3, text="rapido1", highlightcolor="black", font="Algerian", bg="red", command=lambda:funtion(botonRapido))
-#botonRapido.pack(expand=False, fill=BOTH)
+botonLento = Radiobutton(label3, text="Lento",  bg="green", command=lambda:funtion(botonLento), value = "1")
+botonLento.pack(expand=False, fill=BOTH)
+botonRapido = Radiobutton(label3, text="Rapido", bg="red", command=lambda:funtion(botonRapido), value = "2")
+botonRapido.pack(expand=False, fill=BOTH)
 
+"""
 resultado1 = Label(label1)
-#resultado1.pack(expand=False, fill=BOTH)
-
+resultado1.pack(expand=False, fill=BOTH)
+"""
 main_window.rowconfigure(0, weight=1)
 main_window.rowconfigure(1, weight=15)
 main_window.columnconfigure(0, weight=5)
