@@ -19,22 +19,22 @@ class PDA:
 		if simboloInicial != None:
 			self.pila.apilar(simboloInicial)
 			self.proceso.append([simboloInicial, 1, "", ""])
-			print(self.pila.verTope())
 
 	def setEdges(self, edges):
 		self.edges = edges
 
-	def buscarNodo(self, nodo):
+	def sacarCaminos(self, nodo):
 
 		caminos = []#Lista de caminos
 
-		#Saco los posibles caminos de un punto a otro
-		for w in self.edges:
-			divido = w[0].split("-")
-			origen = divido[0]
+		if self.edges != None:
+			#Saco los posibles caminos de un punto a otro
+			for w in self.edges:
+				divido = w[0].split("-")
+				origen = divido[0]
 
-			if origen == nodo:
-				caminos.append(w)
+				if origen == nodo:
+					caminos.append(w)
 
 		return caminos
 
@@ -54,85 +54,55 @@ class PDA:
 
 		return caminosPosibles
 
-	def evaluarCadena(self, cadena, actual, i, pila, proceso, cad):
+	def evaluarCadena(self, cadena, nodo, pila, proceso, direccion):
 
 		if self.edges != None:
-			
-			caminosTomados = []
 
-			if (cadena == "" or cadena == "λ") and actual == self.estadoFinal:
+			if cadena == "" and nodo == self.estadoFinal:
 				self.pila = pila
-				return True, proceso
+				self.proceso = proceso
+				return True
 
-			if cadena != "":
-				letra = cadena[0]
+			if cadena == "":
+				letra = "λ"
 
-			else:
-				cadena = letra = "λ"
+			caminosNodo = self.sacarCaminos(nodo)
 
-			actual = actual.lower()#Nodo donde se encuentra
+			if caminosNodo != []:
 
-			caminosEncontrados = self.buscarNodo(actual)
-			#Recorro todos los posibles caminos si los hay
-
-			if caminosEncontrados != []:
-
-				caminosEncontrados = self.__caminosPosibles(letra, caminosEncontrados)
-				
-				encontroCamino = False
-
-				ver = origen = destino = None
-				#print(caminosEncontrados, " de iteracion: ", i, " y letra ", letra)
 				retorno = False
+				caminosNodo = self.__caminosPosibles(cadena[0], caminosNodo)
 
-				for w in caminosEncontrados:
-					
-					if "-" in w:
-						ver = w
-						#Divido el string para saber Nodo origen a nodo destino
-						divido = ver.split("-")
-						origen = divido[0]
-						destino = divido[1]
+				for i in caminosNodo:
 
-					#Recorro cada regla para sacar leo/saco/meto para evaluar
+					if "-" in i:
+						direccion = i.split("-")
 
-					if "-" not in w:
-						leo, saco, meto = extraerExpresion(w)
-						if leo == letra or leo == "λ":
-							print(caminosEncontrados)
-							print(" LETRA ACTUAL: ", letra, " LEO: ", leo, " SACO: ", saco, " METO:", meto)
-							print("Camino usado: ", w," NODO ACTUAL ",actual ," iteracion ", i)
+					else:
+						leer, sacar, meter = extraerExpresion(i)
 
+						if (leer == cadena[0] or leer == "λ") and (sacar == pila.verTope()):
+							proceso.append([pila.sacarPila(), "0", i, direccion])
 
-							if saco == pila.verTope():
-								print("Iteracion: ", i, "Camino tomado: ", w, " LETRA: ", letra,  " cad:", cad)
-								#Meto valores en la pila
-								#Si el leo y saco estan bien
-								encontroCamino = True
-								
-								proceso.append([pila.sacarPila(), 0, w, ver])
+							for x in meter:
+								if x != "λ":
+									pila.apilar(x)
+									proceso.append([x, "1", i, direccion])
 
-								for x in meto:
-									if x != "λ":
-										pila.apilar(x)
-										proceso.append([x, 1, w, ver])
-
-								retorno, proceso = self.evaluarCadena(cadena[1:], destino, i+1, pila, proceso, cad)
+						retorno = self.evaluarCadena(cadena[1:], direccion[1], pila, proceso, direccion)
 
 					if retorno == True:
 						self.pila = pila
-						return retorno, proceso
+						self.proceso = proceso 
+						return True
 
-				if encontroCamino == False:
-					return False, proceso
-
-				return retorno, proceso
+				return retorno
 
 			else:
-				return False, proceso
+				self.pila = pila
+				self.proceso = proceso
+				return False
 
-
-automata1 = PDA("p", "r", "#")
 #  Transiciones grafo 1 --- REGLAS CON ESTE AUTOMATA YA ESTA BUENO
 """
 label_PtoP = ["p-p","b/b/bb", "a/b/ba", "b/a/ab", "a/a/aa", "b/#/#b", "a/#/#a"]
@@ -147,9 +117,9 @@ label_PtoQ = ["p-q","b/b/λ", "a/a/λ"]
 label_QtoQ = ["q-q","b/b/λ", "a/a/λ"]
 label_QtoR = ["q-r","λ/#/#"]
 
-edges1 = [label_PtoQ, label_PtoP, label_QtoR, label_QtoQ]
+edges = [label_PtoQ, label_PtoP, label_QtoR, label_QtoQ]
 
-automata1.setEdges(edges1)
-resultado, proceso = automata1.evaluarCadena("aaabbbbaaa", automata1.estadoInicial, 0, automata1.pila, automata1.proceso, "aaaabbbbaaaa")
-print("RESULTADO: ", resultado, " tope PILA: ", automata1.pila.verTope(), " \nProceso:", proceso)
-print(automata1.pila.datos)
+automata = PDA("p", "r", "#")
+automata.setEdges(edges)
+resultado = automata.evaluarCadena("aaaabbbbaaaa", automata.estadoInicial, automata.pila, automata.proceso, None)
+print("\nResultado 2: ", resultado, " Proceso: ", automata.proceso)

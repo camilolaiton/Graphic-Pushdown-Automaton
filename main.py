@@ -22,7 +22,7 @@ def cambiarImagen(elegir):
 def comenzar():
 
 	if txtUsuario.get() != "":
-		resultado = automata1.evaluarCadena(txtUsuario.get(), automata1.estadoInicial, 0, automata1.pila, automata1.proceso)
+		resultado = automata1.evaluarCadena(txtUsuario.get(), automata1.estadoInicial, automata1.pila, automata1.proceso, None)
 		pila.dibujarPila()
 		print(resultado)
 	else:
@@ -136,7 +136,6 @@ main_window.rowconfigure(1, weight=15)
 main_window.columnconfigure(0, weight=1)
 main_window.columnconfigure(1, weight=1)
 main_window.columnconfigure(2, weight=1)
-
 
 #pila.dibujarPila()
 
