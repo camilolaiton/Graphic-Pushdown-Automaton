@@ -44,6 +44,7 @@ def funtion(boton):
 		botonLento.config(bg="green")
 		pila.sapi = True
 
+
 def cambiarImagen(elegir, automata):
 	
     photo2 = PhotoImage(file="resources/"+automata+elegir+".png")
@@ -55,7 +56,7 @@ def comenzar():
 	if txtUsuario.get() != "":
 		resultado = automata1.evaluarCadena(txtUsuario.get(), automata1.estadoInicial, automata1.pila, automata1.proceso)
 		pila.dibujarPila()
-		print(resultado)
+		
 		cadena = ""
 		if resultado == True:
 			cadena = "Cadena Aceptada"
@@ -122,12 +123,18 @@ class pilaGrafica:
 			if w[1] == 1:
 				self.mensaje = w[0]
 				self.aumentarPila()
-				#SapiLee("Introduzco " + w[0]+" en pila")
+				
+				if pila.sapi == True:
+					SapiLee("Introduzco " + w[0]+" en pila")
+				
 				cambiarImagen(w[3], self.automata)
 		
 			else:
 				self.decrementarPila()
-				#SapiLee("Saco " + w[0] +" en pila")
+				
+				if pila.sapi == True:
+					SapiLee("Saco " + w[0] +" en pila")
+				
 				cambiarImagen(w[3], self.automata)
 			
 			if destino != None:
