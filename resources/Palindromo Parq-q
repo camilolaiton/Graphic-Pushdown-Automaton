@@ -2,10 +2,12 @@ digraph pushDownAutomaton {
 	bgcolor="purple:pink"
 	node [color="blue:cyan" gradientangle=270 shape=circle style=filled]
 	node [color="blue:cyan" gradientangle=270 shape=doublecircle style=filled]
-	label="Push Down Automaton - Palindromo Impar"
+	label="Push Down Automaton - Palindromo Par"
 	edge [color="black:lightgray" gradientangle=270 style=filled]
 	rankdir=UD size=20
 	node [shape=doublecircle]
+	p [shape=circle]
+	q [shape=circle]
 	r
 	node [shape=circle]
 	p -> p [label="b/b/bb
@@ -15,13 +17,12 @@ a/a/aa
 b/#/#b
 a/#/#a
 "]
-	p -> q [label="c/#/#
-c/b/b
-c/a/a
+	p -> q [label="b/b/λ
+a/a/λ
 "]
 	q -> q [label="b/b/λ
 a/a/λ
-"]
+" color=red]
 	q -> r [label="λ/#/#
 "]
 }
