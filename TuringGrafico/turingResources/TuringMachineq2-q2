@@ -1,0 +1,22 @@
+digraph "Turing Machine" {
+	bgcolor="purple:pink"
+	node [color="blue:cyan" gradientangle=270 shape=circle style=filled]
+	node [color="blue:cyan" gradientangle=270 shape=doublecircle style=filled]
+	label="Turing Machine - TuringMachine"
+	edge [color="black:lightgray" gradientangle=270 style=filled]
+	rankdir=LR size=20
+	node [shape=doublecircle]
+	q1 [shape=circle]
+	q2 [shape=circle]
+	q3
+	node [shape=circle]
+	q1 -> q1 [label="
+b,a,R
+a,a,R"]
+	q1 -> q2 [label="
+□,□,L"]
+	q2 -> q2 [label="
+a,a,L" color=red]
+	q2 -> q3 [label="
+□,□,L"]
+}
