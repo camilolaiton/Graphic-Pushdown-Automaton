@@ -150,7 +150,6 @@ label_PtoQ = ["p-q","b/b/λ", "a/a/λ"]
 label_QtoQ = ["q-q","b/b/λ", "a/a/λ"]
 label_QtoR = ["q-r","λ/#/#"]
 
-
 edges1 = [label_PtoQ, label_PtoP, label_QtoR, label_QtoQ]
 
 automata1.setEdges(edges1)
